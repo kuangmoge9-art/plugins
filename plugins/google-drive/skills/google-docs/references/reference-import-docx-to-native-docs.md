@@ -17,7 +17,8 @@ For `.docx` inputs, the blessed path is the Google Drive upload tool with `mime_
 Steps:
 
 1. Confirm the local source path is an absolute path to a `.docx` file.
-2. Upload the file with the Google Drive connector upload tool:
+2. Confirm the local source path and any builder/helper scripts are inside a per-task scratch directory, not the user-facing workspace root.
+3. Upload the file with the Google Drive connector upload tool:
 
 ```json
 {
@@ -27,10 +28,11 @@ Steps:
 }
 ```
 
-3. Use the connector function exposed in the current runtime, for example `mcp__codex_apps__google_drive._upload_file(...)` or the equivalent Google Drive upload tool.
-4. Verify the upload response reports native conversion with `mime_type: "application/vnd.google-apps.document"` and a Google Docs URL or document id.
-5. If the desired Google Doc title should not include `.docx`, rename the native Google Doc with `mcp__codex_apps__google_drive._update_file(...)` or the equivalent Drive metadata update tool after upload.
-6. Read the imported document with the Google Docs connector and verify that core headings, body text, tables, and other connector-visible content survived conversion.
+4. Use the connector function exposed in the current runtime, for example `mcp__codex_apps__google_drive._upload_file(...)` or the equivalent Google Drive upload tool.
+5. Verify the upload response reports native conversion with `mime_type: "application/vnd.google-apps.document"` and a Google Docs URL or document id.
+6. If the desired Google Doc title should not include `.docx`, rename the native Google Doc with `mcp__codex_apps__google_drive._update_file(...)` or the equivalent Drive metadata update tool after upload.
+7. Read the imported document with the Google Docs connector and verify that core headings, body text, tables, and other connector-visible content survived conversion.
+8. After successful connector readback, clean up local staging artifacts: generated Python or JS builder scripts, render folders, QA PNG/PDF files, temporary assets, and the local `.docx` source. Keep local files only when the user explicitly asked to preserve them.
 
 ## Preservation Mode
 

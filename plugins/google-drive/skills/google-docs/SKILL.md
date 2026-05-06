@@ -27,6 +27,8 @@ Use this routing:
 3. If the Documents plugin is unavailable, do not create the net-new Google Doc directly. Report that the required local Documents authoring path is unavailable.
 4. Existing Google Docs reads, summaries, edits, comments, and template-preserving modifications: use Google Docs connector or app tools directly.
 
+Local DOCX staging hygiene is mandatory for net-new Google Docs. Put all builder scripts, generated `.docx` files, render outputs, QA PNG/PDF files, and scratch assets in one per-task scratch directory, not in the user-facing workspace root. After successful native import and connector readback, remove those local staging artifacts unless the user explicitly asked to keep local files.
+
 Do not reference the local `.docx` in the final answer after successful native import. The final answer includes the Google Docs link only.
 
 ## Runtime Model
