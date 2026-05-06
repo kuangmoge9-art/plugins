@@ -21,6 +21,8 @@ A Codex plugin combines:
 - App or Connector: a partner-hosted MCP server that exposes product APIs as tools Codex can call after OpenAI review.
 - Skills: prompt-layer instructions that teach Codex when and how to use those tools to complete higher-level workflows.
 
+For curated-directory plugins, the tool layer must be a reviewed ChatGPT App/Connector. For GitHub-hosted plugins intended for local marketplace installation, raw MCP server configuration is allowed.
+
 Design for both humans and agents. Humans may invoke a plugin explicitly with `@PluginName`; agents may invoke it implicitly while completing a broader task. A good plugin is discoverable from names and descriptions, works well when directly requested, and composes with other plugins.
 
 There are two common plugin layers:
@@ -32,7 +34,7 @@ Prefer composability. Keep product capabilities in connector plugins and put wor
 
 ## Build Sequence
 
-1. Build the App: create an MCP server that exposes backend APIs as tools Codex can invoke.
+1. Build the App or MCP integration: for curated-directory plugins, create a reviewed ChatGPT App/Connector; for GitHub-hosted local marketplace plugins, raw MCP server configuration is allowed.
 2. Add Skills: write operational instructions for workflows, tool sequencing, terminology, confirmations, summaries, and edge cases.
 3. Eval: test hero workflows and golden prompts, ideally with automated loops and realistic fixtures.
 4. Submit: package skills plus the approved app, hero prompts, use cases, and review account for plugin review.
@@ -43,7 +45,7 @@ Current submission may involve separate app and plugin submissions. Design the m
 
 ### Meet User Expectations
 
-The app should support the core actions users reasonably expect from the product:
+The app should support the core actions users reasonably expect from the product, some examples:
 
 - Shopping: browse products and buy.
 - Food delivery or coffee: browse menu and order.
