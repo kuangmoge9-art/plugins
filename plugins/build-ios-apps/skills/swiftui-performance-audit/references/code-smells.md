@@ -64,6 +64,20 @@ ForEach(items.filter { $0.isEnabled }) { item in
 
 Prefer a prefiltered collection with stable identity.
 
+### Eager stacks with large repeated content
+
+```swift
+ScrollView {
+    VStack {
+        ForEach(items) { item in
+            Row(item)
+        }
+    }
+}
+```
+
+Standard stacks load their child view hierarchy immediately. For large repeated content, profile whether `List`, `LazyVStack`, `LazyHStack`, or a lazy grid avoids unnecessary initial view creation. Keep standard stacks for small content or when lazy layout does not improve the measured path.
+
 ### Unstable identity
 
 ```swift

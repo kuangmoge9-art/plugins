@@ -11,7 +11,7 @@ Use these rules when a SwiftUI screen is large, scroll-heavy, frequently updated
 - In lazy containers, keep row-lifetime `@State` on the stable root view returned from `ForEach`; nested child state can be recreated when offscreen content is rebuilt.
 - Keep expensive filtering, sorting, and formatting out of `body`; precompute or move it into a model/helper when it is not trivial.
 - Narrow observation scope so only the views that read changing state need to update.
-- Prefer lazy containers for larger scrolling content and extract subviews when only part of a screen changes frequently.
+- Use lazy containers for large repeated content when standard stacks load too many children; prefer standard stacks for small content or when profiling does not show a lazy benefit.
 - Avoid swapping entire top-level view trees for small state changes; keep a stable root view and vary localized sections or modifiers.
 - Prefer value-based modifiers over `.if`-style helpers when a condition changes only styling or behavior.
 - Avoid `AnyView`, stored builder closures, and manual `Binding(get:set:)` in hot paths when concrete views, stored child views, or key-path bindings would do.

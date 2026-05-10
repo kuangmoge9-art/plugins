@@ -105,7 +105,8 @@ Prefer:
 ## Lists and large collections
 
 - Prefer `List` for table-like content with system affordances.
-- Prefer `ScrollView` plus lazy containers for custom layouts when list affordances are not needed.
+- For custom layouts with many repeated offscreen children, consider `ScrollView` plus lazy containers when list affordances are not needed.
+- Prefer standard stacks for small content or when profiling does not show a lazy-container benefit.
 - Avoid nested scroll containers such as `ScrollView { List { ... } }`.
 - Use stable domain IDs rather than indices, mutable values, or per-render UUIDs.
 - Be cautious with `ForEach(0..<count)` when the range is dynamic or rows carry state.
@@ -150,7 +151,7 @@ SwiftUI runs on the main actor. Keep synchronous work off the main thread and ou
 
 - Prefer `.task { ... }` for view-scoped async work because SwiftUI cancels it with the view lifecycle.
 - Avoid `Task.detached` for view-initiated work unless the lifetime and cancellation story are explicit.
-- Do not assume `.task` or `async` makes CPU-heavy synchronous work leave the main actor. Move expensive parsing, image decoding, formatting, or database work into a non-main-actor helper or service; in Swift 6.2+ use `@concurrent` when an async helper must explicitly hop off the caller's actor.
+- Do not assume `.task` or `async` makes CPU-heavy synchronous work leave the main actor. Move expensive parsing, image decoding, formatting, or database work into a non-main-actor helper or service; in Swift 6.2+ use `@concurrent` when an async helper must explicitly hop off the caller's actor and does not need actor-isolated UI state.
 - Flag heavy `.onAppear` and `.onChange` handlers, especially for text input, geometry, timers, and scrolling.
 - Avoid per-row network `.task` work in large lists unless it is cached, bounded, or intentionally coordinated.
 
