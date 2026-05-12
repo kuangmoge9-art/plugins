@@ -289,12 +289,12 @@ function ResourceSection({
   return (
     <section className="space-y-3">
       <SectionHeading>{title}</SectionHeading>
-      <div className="border-t border-line">
+      <div className="divide-y divide-line border-t border-line">
         {items.map((item) => (
           <button
             key={item.id}
             type="button"
-            className="grid min-h-[62px] w-full grid-cols-[20px_minmax(0,1fr)_18px] items-center gap-4 border-b border-line py-3 text-left transition hover:bg-control"
+            className="grid min-h-[62px] w-full grid-cols-[20px_minmax(0,1fr)_18px] items-center gap-4 py-3 text-left transition hover:bg-control"
             onClick={() => {
               if (kind === "skill") {
                 onOpen({ kind, item: item as SkillSummary });
@@ -342,13 +342,13 @@ function MetadataSection({
   return (
     <section className="space-y-3">
       <SectionHeading>{title}</SectionHeading>
-      <div className="border-t border-line">
+      <div className="divide-y divide-line border-t border-line">
         {rows.map((row) => {
           const value = safeText(row.value);
           return (
             <div
               key={`${safeText(row.label)}-${value}`}
-              className="grid min-h-[62px] grid-cols-[20px_minmax(0,1fr)_28px] items-center gap-4 border-b border-line py-3"
+              className="grid min-h-[62px] grid-cols-[20px_minmax(0,1fr)_28px] items-center gap-4 py-3"
             >
               <span className="text-ink">{icon}</span>
               <span className="grid min-w-0 gap-1">
