@@ -48,6 +48,21 @@ python3 .agents/skills/plugin-creator/scripts/create_basic_plugin.py my-plugin \
 
 `<parent-plugin-directory>` is the directory where the plugin folder `<plugin-name>` will be created (for example `~/code/plugins`).
 
+5. Before treating the plugin as finished, run the readiness check after replacing scaffold placeholders and adding real assets/configuration:
+
+```bash
+python3 .agents/skills/plugin-creator/scripts/check_plugin_readiness.py <plugin-path>
+```
+
+For marketplace-backed plugins, include the selected marketplace path:
+
+```bash
+python3 .agents/skills/plugin-creator/scripts/check_plugin_readiness.py <plugin-path> \
+  --marketplace-path <marketplace-json-path>
+```
+
+Add `--require-marketplace` when the plugin must appear in that marketplace before it is considered done.
+
 ## What this skill creates
 
 - Default marketplace-backed scaffolds are personal: `~/plugins/<plugin-name>/` plus
@@ -71,6 +86,7 @@ python3 .agents/skills/plugin-creator/scripts/create_basic_plugin.py my-plugin \
   - `assets/`
   - `.mcp.json`
   - `.app.json`
+- Provides `scripts/check_plugin_readiness.py` to audit a completed scaffold before publishing or sharing.
 
 ## Marketplace workflow
 
@@ -140,11 +156,55 @@ python3 .agents/skills/plugin-creator/scripts/create_basic_plugin.py my-plugin \
 }
 ```
 
+## Readiness checklist
+
+Run `scripts/check_plugin_readiness.py` before telling the user a plugin is complete. Resolve every
+`ERROR`. Treat `WARN` entries as judgment calls; use `--strict-warnings` when the plugin should be
+publish-ready with no loose ends.
+
+The readiness check covers:
+
+- No scaffold placeholders remain in non-reference plugin files, including `[TODO: ...]`, example author URLs,
+  scaffold keywords, generic TODO/TBD markers, and marketplace placeholder names.
+- `.codex-plugin/plugin.json` exists, is valid JSON, uses the normalized folder name, has semantic
+  versioning, and keeps required manifest/interface fields in the expected types.
+- Manifest paths are relative plugin paths that begin with `./` and point to files or directories
+  that actually exist.
+- `interface.logo` and `interface.composerIcon` are real non-empty image assets.
+- `interface.brandColor` is a valid 6-digit hex color and is not blindly left at the scaffold default.
+- `interface.defaultPrompt` contains 1-3 real hero prompts, each 128 characters or fewer.
+- Referenced screenshots exist as non-empty PNG image files.
+- Referenced `.app.json` and `.mcp.json` files are valid JSON with non-empty `apps` or `mcpServers` objects.
+- Every skill `SKILL.md` has frontmatter with `name` and `description`.
+- Every skill with a `SKILL.md` has `agents/openai.yaml` metadata, unless the user explicitly wants
+  to allow missing metadata and the checker is run with `--allow-missing-openai-yaml`.
+- Existing `agents/openai.yaml` files include `interface.display_name` and
+  `interface.short_description`; icon paths are checked when present.
+- The selected or nearest repo marketplace entry has the correct local source path, policy fields,
+  and category when a marketplace is part of the workflow.
+
+Useful options:
+
+```bash
+python3 .agents/skills/plugin-creator/scripts/check_plugin_readiness.py <plugin-path> \
+  --marketplace-path ./.agents/plugins/marketplace.json \
+  --require-marketplace
+```
+
+```bash
+python3 .agents/skills/plugin-creator/scripts/check_plugin_readiness.py <plugin-path> \
+  --allow-missing-openai-yaml
+```
+
 ## Required behavior
 
 - Outer folder name and `plugin.json` `"name"` are always the same normalized plugin name.
 - Do not remove required structure; keep `.codex-plugin/plugin.json` present.
 - Keep manifest values as placeholders until a human or follow-up step explicitly fills them.
+- After scaffolding, point the user to the readiness checklist and command printed by
+  `create_basic_plugin.py`.
+- Do not call a plugin finished until `scripts/check_plugin_readiness.py` has no `ERROR` findings, or
+  until the user explicitly accepts the remaining errors.
 - If creating files inside an existing plugin path, use `--force` only when overwrite is intentional.
 - Preserve any existing marketplace `interface.displayName`.
 - When generating marketplace entries, always write `policy.installation`, `policy.authentication`, and `category` even if their values are defaults.

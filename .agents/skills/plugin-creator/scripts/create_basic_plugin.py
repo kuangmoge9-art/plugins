@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import shlex
 from pathlib import Path
 from typing import Any
 
@@ -183,6 +184,24 @@ def create_stub_file(path: Path, payload: dict, force: bool) -> None:
         handle.write("\n")
 
 
+def print_readiness_checklist(plugin_root: Path, marketplace_path: Path | None) -> None:
+    readiness_script = Path(__file__).with_name("check_plugin_readiness.py")
+    command = ["python3", str(readiness_script), str(plugin_root)]
+    if marketplace_path is not None:
+        command.extend(["--marketplace-path", str(marketplace_path)])
+
+    print()
+    print("Before treating this plugin as finished:")
+    print("- Replace every [TODO: ...] placeholder in plugin.json and companion files.")
+    print("- Add real logo/composer icon assets and any screenshots referenced by plugin.json.")
+    print("- Choose an intentional interface.brandColor, not just the scaffold default.")
+    print("- Rewrite interface.defaultPrompt with 1-3 real hero prompts for this plugin.")
+    print("- Add agents/openai.yaml metadata for every SKILL.md you create.")
+    print("- Keep .app.json, .mcp.json, hooks, and skills paths in sync with plugin.json.")
+    print("Run the readiness check:")
+    print("  " + " ".join(shlex.quote(part) for part in command))
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Create a plugin skeleton with placeholder plugin.json."
@@ -280,6 +299,7 @@ def main() -> None:
             args.force,
         )
 
+    marketplace_path = None
     if args.with_marketplace:
         marketplace_path = Path(args.marketplace_path).expanduser().resolve()
         update_marketplace_json(
@@ -295,6 +315,7 @@ def main() -> None:
     print(f"plugin manifest: {plugin_json_path}")
     if args.with_marketplace:
         print(f"marketplace manifest: {marketplace_path}")
+    print_readiness_checklist(plugin_root, marketplace_path)
 
 
 if __name__ == "__main__":
