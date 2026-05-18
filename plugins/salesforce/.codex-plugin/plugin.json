@@ -1,0 +1,45 @@
+{
+  "name": "salesforce",
+  "version": "0.1.0",
+  "description": "Work with Salesforce records through the canonical Salesforce connector, including account briefs, pipeline review, metadata discovery, SOQL queries, SOSL search, approved automation, and explicit record writes.",
+  "author": {
+    "name": "OpenAI",
+    "email": "support@openai.com",
+    "url": "https://openai.com/"
+  },
+  "homepage": "https://www.salesforce.com/",
+  "repository": "https://github.com/openai/plugins/tree/main/plugins/salesforce",
+  "license": "Proprietary",
+  "keywords": [
+    "salesforce",
+    "crm",
+    "soql",
+    "sosl",
+    "records",
+    "connectors"
+  ],
+  "skills": "./skills/",
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Salesforce",
+    "shortDescription": "Query, search, read, and safely update Salesforce records",
+    "longDescription": "Use Salesforce to discover object metadata, build account and opportunity briefs, review pipeline and forecast risk, run provider-native SOQL and SOSL requests, invoke approved custom automation, read records, and perform explicit record writes through the canonical Salesforce connector.",
+    "developerName": "OpenAI",
+    "category": "Business",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://www.salesforce.com/",
+    "privacyPolicyURL": "https://www.salesforce.com/company/privacy/",
+    "termsOfServiceURL": "https://www.salesforce.com/company/legal/agreements/",
+    "defaultPrompt": [
+      "Find records, build account briefs, review pipeline, run SOQL or SOSL, and update records only when requested"
+    ],
+    "brandColor": "#0176D3",
+    "composerIcon": "./assets/salesforce.svg",
+    "logo": "./assets/salesforce.svg",
+    "screenshots": []
+  }
+}

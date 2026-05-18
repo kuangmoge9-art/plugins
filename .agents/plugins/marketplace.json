@@ -1155,6 +1155,18 @@
       "category": "Productivity"
     },
     {
+      "name": "salesforce",
+      "source": {
+        "source": "local",
+        "path": "./plugins/salesforce"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Business"
+    },
+    {
       "name": "scite",
       "source": {
         "source": "local",
