@@ -1,7 +1,7 @@
 {
   "name": "lseg",
   "version": "1.0.0",
-  "description": "The LSEG connector provides real-time access to LSEG's comprehensive financial market data ecosystem, spanning across asset classes and domains.",
+  "description": "The LSEG plugin provides real-time access to LSEG's comprehensive financial market data ecosystem, spanning across asset classes and domains.",
   "author": {
     "name": "LSEG",
     "url": "https://www.lseg.com"
@@ -9,11 +9,23 @@
   "homepage": "https://www.lseg.com",
   "repository": "https://github.com/openai/plugins",
   "license": "MIT",
-  "keywords": [],
+  "keywords": [
+    "lseg",
+    "financial-market-data",
+    "market-data",
+    "finance",
+    "analytics",
+    "valuation",
+    "financial-instruments",
+    "fx",
+    "bonds",
+    "equities",
+    "derivatives"
+  ],
   "apps": "./.app.json",
   "interface": {
     "displayName": "LSEG",
-    "shortDescription": "Data and analytics",
+    "shortDescription": "Access LSEG market data, analytics, and valuation tools.",
     "longDescription": "The LSEG connector provides real-time access to LSEG's comprehensive financial market data ecosystem, spanning across asset classes and domains. It enables seamless integration of institutional-grade market data, analytics and valuation tools directly into conversational AI workflows, allowing users to access deep market insights, perform complex calculations and analyse financial instruments through natural language interactions.",
     "developerName": "LSEG Engineering",
     "category": "Finance",
@@ -22,7 +34,9 @@
     "privacyPolicyURL": "https://www.lseg.com/en/policies/privacy-statement",
     "termsOfServiceURL": "https://www.lseg.com/en/policies/website-terms-of-use",
     "defaultPrompt": [
-      "Use LSEG to help with this task"
+      "Price FX spot or forward trades with LSEG market data.",
+      "Run LSEG bond valuation analytics for these identifiers.",
+      "Analyze equity index funding costs with LSEG CofBox."
     ],
     "brandColor": "#001EFF",
     "screenshots": []
