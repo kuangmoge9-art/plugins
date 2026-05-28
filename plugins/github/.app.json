@@ -2,6 +2,9 @@
   "apps": {
     "github": {
       "id": "connector_76869538009648d5b282a4bb21c3d157"
+    },
+    "github-enterprise": {
+      "id": "templated_apps_GitHubEnterprise"
     }
   }
 }
