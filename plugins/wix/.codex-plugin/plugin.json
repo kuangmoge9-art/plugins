@@ -20,6 +20,7 @@
     "headless"
   ],
   "skills": "./skills/",
+  "apps": "./.app.json",
   "interface": {
     "displayName": "Wix",
     "shortDescription": "Build Wix apps, headless websites, and manage your Wix business from Codex",
